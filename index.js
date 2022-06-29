@@ -36,9 +36,9 @@ const getHtmlContent = async (filePath, VITE_PROJECT_TYPE) => {
 		var arr3 = reg3.exec(content)
 		if (arr3) {
 			if (arr3[1] === VITE_PROJECT_TYPE) {
-				content = content.replace(reg2, '')
+				content = content.replace(reg3, '')
 			} else {
-				content = content.replace(reg2, '$2')
+				content = content.replace(reg3, '$2')
 			}
 		}
 
