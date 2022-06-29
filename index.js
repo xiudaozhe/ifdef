@@ -13,6 +13,8 @@ const getHtmlContent = async (filePath, VITE_PROJECT_TYPE) => {
 		let content = await readHtmlTemplate(filePath);
 		var reg1 = /<!--#ifdef (.*?)-->([\S\s\t]*?)<!--#endif-->/g
 		var reg2 = /\/\/#ifdef (.*?)([\S\s\t]*?)\/\/#endif/g
+		var reg3 = /<!--#ifndef (.*?)-->([\S\s\t]*?)<!--#endif-->/g
+		var reg4 = /\/\/#ifndef (.*?)([\S\s\t]*?)\/\/#endif/g
 		var arr1 = reg1.exec(content)
 		if (arr1) {
 			if (arr1[1] === VITE_PROJECT_TYPE) {
@@ -21,12 +23,31 @@ const getHtmlContent = async (filePath, VITE_PROJECT_TYPE) => {
 				content = content.replace(reg1, '')
 			}
 		}
+		
 		var arr2 = reg2.exec(content)
 		if (arr2) {
 			if (arr2[1] === VITE_PROJECT_TYPE) {
 				content = content.replace(reg2, '$2')
 			} else {
 				content = content.replace(reg2, '')
+			}
+		}
+
+		var arr3 = reg3.exec(content)
+		if (arr3) {
+			if (arr3[1] === VITE_PROJECT_TYPE) {
+				content = content.replace(reg2, '')
+			} else {
+				content = content.replace(reg2, '$2')
+			}
+		}
+
+		var arr4 = reg4.exec(content)
+		if (arr4) {
+			if (arr4[1] === VITE_PROJECT_TYPE) {
+				content = content.replace(reg4, '')
+			} else {
+				content = content.replace(reg4, '$2')
 			}
 		}
 		return content
