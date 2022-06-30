@@ -23,7 +23,7 @@ const getHtmlContent = async (filePath, VITE_PROJECT_TYPE) => {
 				content = content.replace(reg1, '')
 			}
 		}
-		
+
 		var arr2 = reg2.exec(content)
 		if (arr2) {
 			if (arr2[1] === VITE_PROJECT_TYPE) {
@@ -64,7 +64,7 @@ module.exports = function conditionalCompile(VITE_PROJECT_TYPE) {
 			_env = env;
 		},
 		load(id) {
-			if (path.extname(id) === '.vue') {
+			if (path.extname(id) === '.vue' || path.extname(id) === '.js') {
 				return getHtmlContent(id, VITE_PROJECT_TYPE);
 			}
 			return null;
