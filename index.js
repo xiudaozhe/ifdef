@@ -12,9 +12,9 @@ const getHtmlContent = async (filePath, VITE_PROJECT_TYPE) => {
 		filePath = resolve(filePath);
 		let content = await readHtmlTemplate(filePath);
 		var reg1 = /<!--#ifdef (.*?)-->([\S\s\t]*?)<!--#endif-->/g
-		var reg2 = /\/\/#ifdef (.*?)([\S\s\t]*?)\/\/#endif/g
+		var reg2 = /\/\/#ifdef (.*?)\s([\S\s\t]*?)\/\/#endif/g
 		var reg3 = /<!--#ifndef (.*?)-->([\S\s\t]*?)<!--#endif-->/g
-		var reg4 = /\/\/#ifndef (.*?)([\S\s\t]*?)\/\/#endif/g
+		var reg4 = /\/\/#ifndef (.*?)\s([\S\s\t]*?)\/\/#endif/g
 		var arr1 = reg1.exec(content)
 		if (arr1) {
 			if (arr1[1] === VITE_PROJECT_TYPE) {
