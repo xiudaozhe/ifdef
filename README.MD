@@ -36,8 +36,7 @@ console.log('only show not in PROJECT_A')
 
 ```
 
-## OTHER（with child,use "-"）
-### .env.development
+### .env.development  (use '-' to support child)
 
 ```config
 VITE_PROJECT_TYPE = PROJECT-A
