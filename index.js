@@ -40,12 +40,12 @@ const getHtmlContent = async (filePath, VITE_PROJECT_TYPE) => {
 module.exports = function conditionalCompile(VITE_PROJECT_TYPE) {
 	let _env;
 	return {
-		name: 'vite-ifdef',
+		name: 'cuiplus-ifdef',
 		config(_, env) {
 			_env = env;
 		},
 		load(id) {
-			if (path.extname(id) === '.vue' || path.extname(id) === '.js') {
+			if (!id.includes('node_modules') && (path.extname(id) === '.vue' || path.extname(id) === '.js')) {
 				return getHtmlContent(id, VITE_PROJECT_TYPE);
 			}
 			return null;
