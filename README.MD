@@ -66,6 +66,6 @@ console.log('not show')
 console.log('not show')
 //#endif
 
-```
+//you can allow use "<!--ifdef [NAME]--> and <!--ifndef [NAME]--> in html
 
-### you can allow use <!--ifdef [NAME]--> and <!--ifndef [NAME]--> in html
+```
