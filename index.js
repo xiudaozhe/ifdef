@@ -10,49 +10,30 @@ const readHtmlTemplate = async filePath => {
 const getHtmlContent = async (filePath, VITE_PROJECT_TYPE) => {
 	try {
 		filePath = resolve(filePath);
+
 		let content = await readHtmlTemplate(filePath);
-		var reg1 = /<!--#ifdef (.*?)-->([\S\s\t]*?)<!--#endif-->/g
-		var reg2 = /\/\/#ifdef (.*?)\s([\S\s\t]*?)\/\/#endif/g
-		var reg3 = /<!--#ifndef (.*?)-->([\S\s\t]*?)<!--#endif-->/g
-		var reg4 = /\/\/#ifndef (.*?)\s([\S\s\t]*?)\/\/#endif/g
-		var arr1 = reg1.exec(content)
-		if (arr1) {
-			if (arr1[1] === VITE_PROJECT_TYPE) {
-				content = content.replace(reg1, '$2')
-			} else {
-				content = content.replace(reg1, '')
+		var regList = [
+			{ reg: /<!--#ifdef (.*?)-->([\S\s\t]*?)<!--#endif-->/, match: true },
+			{ reg: /\/\/#ifdef (.*?)\s([\S\s\t]*?)\/\/#endif/, match: true },
+			{ reg: /<!--#ifndef (.*?)-->([\S\s\t]*?)<!--#endif-->/, match: false },
+			{ reg: /\/\/#ifndef (.*?)\s([\S\s\t]*?)\/\/#endif/, match: false },
+		]
+		regList.forEach((regItem) => {
+			let arr;
+			while (arr = regItem['reg'].exec(content)) {
+				if (arr) {
+					if ((arr[1] === VITE_PROJECT_TYPE || arr[1] === VITE_PROJECT_TYPE.split('-')[0]) ^ regItem['match']) {
+						content = content.replace(regItem['reg'], '')
+					} else {
+						content = content.replace(regItem['reg'], '$2')
+					}
+				}
 			}
-		}
-
-		var arr2 = reg2.exec(content)
-		if (arr2) {
-			if (arr2[1] === VITE_PROJECT_TYPE) {
-				content = content.replace(reg2, '$2')
-			} else {
-				content = content.replace(reg2, '')
-			}
-		}
-
-		var arr3 = reg3.exec(content)
-		if (arr3) {
-			if (arr3[1] === VITE_PROJECT_TYPE) {
-				content = content.replace(reg3, '')
-			} else {
-				content = content.replace(reg3, '$2')
-			}
-		}
-
-		var arr4 = reg4.exec(content)
-		if (arr4) {
-			if (arr4[1] === VITE_PROJECT_TYPE) {
-				content = content.replace(reg4, '')
-			} else {
-				content = content.replace(reg4, '$2')
-			}
-		}
+		})
 		return content
 	} catch (error) {
 		console.error(error);
+		console.error(filePath)
 	}
 };
 
