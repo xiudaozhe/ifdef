@@ -1,0 +1,1 @@
+export declare var conditionalCompile: (type: String) => Object;
